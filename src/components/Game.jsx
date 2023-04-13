@@ -14,7 +14,6 @@ const Game = () => {
     setMoles([])
     setGameOver(false)
     generateMoles()
-    clearTimeout(moleTimeout)
     setMoleTimeout(
       setTimeout(() => {
         activateMole()
@@ -39,7 +38,6 @@ const Game = () => {
       updatedMoles[moleIndex].active = true
       return updatedMoles
     })
-    clearTimeout(moleTimeout)
     setMoleTimeout(
       setTimeout(() => {
         deactivateMole(moleIndex)
@@ -53,7 +51,6 @@ const Game = () => {
       updatedMoles[index].active = false
       return updatedMoles
     })
-    clearTimeout(moleTimeout)
     setMoleTimeout(
       setTimeout(() => {
         activateMole()
@@ -72,7 +69,6 @@ const Game = () => {
   }
 
   const endGame = () => {
-    clearTimeout(moleTimeout)
     setGameOver(true)
   }
 
@@ -94,6 +90,12 @@ const Game = () => {
       }
     }
   }, [countdown])
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(moleTimeout)
+    }
+  }, [moles, gameOver])
 
   return (
     <main>
