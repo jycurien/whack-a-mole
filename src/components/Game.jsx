@@ -131,7 +131,7 @@ const Game = () => {
       ) : (
         <>
           <div className='countdown'>
-            <span>{countdown > 0 ? '⏳' : '⌛'}</span>
+            <span>⏳</span>
             {countdown}
           </div>
           <div
