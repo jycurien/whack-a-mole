@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import Countdown from './Countdown'
 
 const Game = () => {
   const [score, setScore] = useState(0)
@@ -7,7 +8,6 @@ const Game = () => {
   const [moles, setMoles] = useState([])
   const [gameOver, setGameOver] = useState(true)
   const [moleTimeout, setMoleTimeout] = useState(null)
-  const [countdown, setCountdown] = useState(null)
 
   const startGame = () => {
     setScore(0)
@@ -19,7 +19,6 @@ const Game = () => {
         activateMole()
       }, Math.floor(Math.random() * 600 + 400))
     )
-    setCountdown(30)
   }
 
   const generateMoles = () => {
@@ -73,25 +72,6 @@ const Game = () => {
   }
 
   useEffect(() => {
-    let timeout = null
-    if (countdown && !gameOver) {
-      timeout = setTimeout(() => {
-        setCountdown(countdown - 1)
-      }, 1000)
-    }
-
-    if (countdown === 0) {
-      endGame()
-    }
-
-    return () => {
-      if (timeout) {
-        clearTimeout(timeout)
-      }
-    }
-  }, [countdown])
-
-  useEffect(() => {
     return () => {
       clearTimeout(moleTimeout)
     }
@@ -132,10 +112,7 @@ const Game = () => {
         </div>
       ) : (
         <>
-          <div className='countdown'>
-            <span>⏳</span>
-            {countdown}
-          </div>
+          <Countdown endGame={endGame} gameOver={gameOver} />
           <div
             className='mole-container'
             style={{
