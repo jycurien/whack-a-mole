@@ -7,6 +7,7 @@ const Game = () => {
   const [moles, setMoles] = useState([])
   const [gameOver, setGameOver] = useState(true)
   const [moleTimeout, setMoleTimeout] = useState(null)
+  const [countdown, setCountdown] = useState(null)
 
   const startGame = () => {
     setScore(0)
@@ -19,6 +20,7 @@ const Game = () => {
         activateMole()
       }, Math.floor(Math.random() * 600 + 400))
     )
+    setCountdown(30)
   }
 
   const generateMoles = () => {
@@ -30,7 +32,7 @@ const Game = () => {
   }
 
   const activateMole = () => {
-    const moleIndex = Math.floor(Math.random() * 9)
+    const moleIndex = Math.floor(Math.random() * columns * rows)
     setMoles((prevMoles) => {
       const updatedMoles = [...prevMoles]
       updatedMoles[moleIndex].active = true
@@ -69,10 +71,23 @@ const Game = () => {
   }
 
   useEffect(() => {
-    if (score >= 10) {
+    let timeout = null
+    if (countdown && !gameOver) {
+      timeout = setTimeout(() => {
+        setCountdown(countdown - 1)
+      }, 1000)
+    }
+
+    if (countdown === 0) {
       endGame()
     }
-  }, [score])
+
+    return () => {
+      if (timeout) {
+        clearTimeout(timeout)
+      }
+    }
+  }, [countdown])
 
   return (
     <main>
@@ -108,22 +123,28 @@ const Game = () => {
           <button onClick={startGame}>Start</button>
         </div>
       ) : (
-        <div
-          className='mole-container'
-          style={{
-            gridTemplateColumns: `repeat(${columns}, 80px)`,
-            gridTemplateRows: `repeat(${rows}, 80px)`,
-          }}
-        >
-          {moles.map((mole, index) => (
-            <div
-              key={mole.id}
-              className={`mole ${mole.active ? 'active' : ''}`}
-            >
-              <div onClick={() => handleMoleClick(index)}>🐹</div>
-            </div>
-          ))}
-        </div>
+        <>
+          <div className='countdown'>
+            <span>{countdown > 0 ? '⏳' : '⌛'}</span>
+            {countdown}
+          </div>
+          <div
+            className='mole-container'
+            style={{
+              gridTemplateColumns: `repeat(${columns}, 80px)`,
+              gridTemplateRows: `repeat(${rows}, 80px)`,
+            }}
+          >
+            {moles.map((mole, index) => (
+              <div
+                key={mole.id}
+                className={`mole ${mole.active ? 'active' : ''}`}
+              >
+                <div onClick={() => handleMoleClick(index)}>🐹</div>
+              </div>
+            ))}
+          </div>
+        </>
       )}
     </main>
   )
