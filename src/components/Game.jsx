@@ -35,6 +35,7 @@ const Game = () => {
     const moleIndex = Math.floor(Math.random() * columns * rows)
     setMoles((prevMoles) => {
       const updatedMoles = [...prevMoles]
+      updatedMoles[moleIndex].hit = false
       updatedMoles[moleIndex].active = true
       return updatedMoles
     })
@@ -61,6 +62,11 @@ const Game = () => {
   }
 
   const handleMoleClick = (index) => {
+    setMoles((prevMoles) => {
+      const updatedMoles = [...prevMoles]
+      updatedMoles[index].hit = true
+      return updatedMoles
+    })
     setScore(score + 1)
     deactivateMole(index)
   }
@@ -140,7 +146,9 @@ const Game = () => {
                 key={mole.id}
                 className={`mole ${mole.active ? 'active' : ''}`}
               >
-                <div onClick={() => handleMoleClick(index)}>🐹</div>
+                <div onClick={() => handleMoleClick(index)}>
+                  {mole.hit ? '💥' : '🐹'}
+                </div>
               </div>
             ))}
           </div>
