@@ -88,10 +88,10 @@ const Game = () => {
               id='columns'
               type='number'
               min={3}
-              max={8}
+              max={6}
               value={columns}
               onChange={(e) =>
-                setColumns(Math.min(8, Math.max(3, e.target.value)))
+                setColumns(Math.min(6, Math.max(3, e.target.value)))
               }
             />
           </div>
@@ -116,8 +116,8 @@ const Game = () => {
           <div
             className='mole-container'
             style={{
-              gridTemplateColumns: `repeat(${columns}, 80px)`,
-              gridTemplateRows: `repeat(${rows}, 80px)`,
+              gridTemplateColumns: `repeat(${columns}, 1fr)`,
+              gridTemplateRows: `repeat(${rows}, 1fr)`,
             }}
           >
             {moles.map((mole, index) => (

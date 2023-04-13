@@ -48,22 +48,22 @@ h1 {
 .mole-container {
   background-color: #375d40;
   display: grid;
-  grid-gap: 2rem;
-  padding: 2rem;
+  grid-gap: 1.5rem;
+  padding: 1.5rem;
   cursor: crosshair;
 }
 
 .mole {
-  width: 80px;
-  height: 80px;
+  width: 60px;
+  height: 60px;
   overflow: hidden;
-  border-bottom: 8px solid;
+  border-bottom: 6px solid;
 }
 
 .mole>div {
-  font-size: 60px;
-  line-height: 80px;
-  transform: translateY(80px);
+  font-size: 45px;
+  line-height: 60px;
+  transform: translateY(60px);
   transition: transform 0.1s;
 }
 
@@ -88,6 +88,7 @@ input {
   border-radius: 0.25rem;
   margin: 0.5rem;
   min-width: 80px;
+  border: 1px solid #ccc;
 }
 
 .countdown {
@@ -97,4 +98,23 @@ input {
 
 .countdown span {
   margin-inline-end: 0.5rem;
+}
+
+@media (min-width: 992px) {
+  .mole-container {
+    grid-gap: 2rem;
+    padding: 2rem;
+  }
+
+  .mole {
+    width: 80px;
+    height: 80px;
+    border-bottom: 8px solid;
+  }
+
+  .mole>div {
+    font-size: 60px;
+    line-height: 80px;
+    transform: translateY(80px);
+  }
 }
