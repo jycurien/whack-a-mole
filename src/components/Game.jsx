@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import Countdown from './Countdown'
+import Config from './Config'
 
 const Game = () => {
   const [score, setScore] = useState(0)
@@ -96,47 +97,16 @@ const Game = () => {
     <main>
       <h2>Score: {score}</h2>
       {gameOver ? (
-        <div>
-          <div>
-            <label htmlFor='image'>
-              Use your custom image (works better with a square image)
-            </label>
-            <br />
-            <input
-              id='image'
-              type='file'
-              onChange={handleImageChange}
-              placeholder=''
-            />
-          </div>
-          <div>
-            <label htmlFor='columns'>Number of columns:</label>
-            <input
-              id='columns'
-              type='number'
-              min={3}
-              max={6}
-              value={columns}
-              onChange={(e) =>
-                setColumns(Math.min(6, Math.max(3, e.target.value)))
-              }
-            />
-          </div>
-          <div>
-            <label htmlFor='rows'>Number of rows:</label>
-            <input
-              id='rows'
-              type='number'
-              min={3}
-              max={6}
-              value={rows}
-              onChange={(e) =>
-                setRows(Math.min(6, Math.max(3, e.target.value)))
-              }
-            />
-          </div>
+        <>
+          <Config
+            handleImageChange={handleImageChange}
+            columns={columns}
+            setColumns={setColumns}
+            rows={rows}
+            setRows={setRows}
+          />
           <button onClick={startGame}>Start</button>
-        </div>
+        </>
       ) : (
         <>
           <Countdown endGame={endGame} gameOver={gameOver} />
