@@ -8,6 +8,7 @@ const Game = () => {
   const [moles, setMoles] = useState([])
   const [gameOver, setGameOver] = useState(true)
   const [moleTimeout, setMoleTimeout] = useState(null)
+  const [fileDataURL, setFileDataURL] = useState(null)
 
   const startGame = () => {
     setScore(0)
@@ -71,6 +72,20 @@ const Game = () => {
     setGameOver(true)
   }
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      const fileReader = new FileReader()
+      fileReader.onload = (e) => {
+        const { result } = e.target
+        if (result) {
+          setFileDataURL(result)
+        }
+      }
+      fileReader.readAsDataURL(file)
+    }
+  }
+
   useEffect(() => {
     return () => {
       clearTimeout(moleTimeout)
@@ -82,6 +97,18 @@ const Game = () => {
       <h2>Score: {score}</h2>
       {gameOver ? (
         <div>
+          <div>
+            <label htmlFor='image'>
+              Use your custom image (works better with a square image)
+            </label>
+            <br />
+            <input
+              id='image'
+              type='file'
+              onChange={handleImageChange}
+              placeholder=''
+            />
+          </div>
           <div>
             <label htmlFor='columns'>Number of columns:</label>
             <input
@@ -126,7 +153,13 @@ const Game = () => {
                 className={`mole ${mole.active ? 'active' : ''}`}
               >
                 <div onClick={() => handleMoleClick(index)}>
-                  {mole.hit ? '💥' : '🐹'}
+                  {mole.hit ? (
+                    '💥'
+                  ) : fileDataURL ? (
+                    <img src={fileDataURL} />
+                  ) : (
+                    '🐹'
+                  )}
                 </div>
               </div>
             ))}
