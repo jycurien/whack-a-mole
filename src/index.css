@@ -57,18 +57,20 @@ h1 {
   width: 60px;
   height: 60px;
   overflow: hidden;
-  border-bottom: 6px solid;
+  border-radius: 50%;
+  background-color: #444411;
 }
 
 .mole>div {
-  font-size: 45px;
+  text-align: center;
+  font-size: 40px;
   line-height: 60px;
-  transform: translateY(60px);
+  transform: scale(0);
   transition: transform 0.1s;
 }
 
 .mole.active>div {
-  transform: translateY(0px);
+  transform: scale(1);
 }
 
 button {
@@ -109,12 +111,10 @@ input {
   .mole {
     width: 80px;
     height: 80px;
-    border-bottom: 8px solid;
   }
 
   .mole>div {
-    font-size: 60px;
+    font-size: 54px;
     line-height: 80px;
-    transform: translateY(80px);
   }
 }
