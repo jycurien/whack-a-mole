@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Countdown from './Countdown'
 import Config from './Config'
 
@@ -6,6 +6,7 @@ const Game = () => {
   const [gameOver, setGameOver] = useState(true)
   const [moles, setMoles] = useState([])
   const [score, setScore] = useState(0)
+  const [moleTimeout, setMoleTimeout] = useState(null)
   const [columns, setColumns] = useState(4)
   const [rows, setRows] = useState(4)
   const [fileDataURL, setFileDataURL] = useState(null)
@@ -27,9 +28,11 @@ const Game = () => {
       return updatedMoles
     })
 
-    setTimeout(() => {
-      deactivateMole(moleIndex)
-    }, Math.floor(Math.random() * 600 + 400))
+    setMoleTimeout(
+      setTimeout(() => {
+        deactivateMole(moleIndex)
+      }, Math.floor(Math.random() * 600 + 400))
+    )
   }
 
   const deactivateMole = (index) => {
@@ -39,9 +42,11 @@ const Game = () => {
       return updatedMoles
     })
 
-    setTimeout(() => {
-      activateMole()
-    }, Math.floor(Math.random() * 600 + 400))
+    setMoleTimeout(
+      setTimeout(() => {
+        activateMole()
+      }, Math.floor(Math.random() * 600 + 400))
+    )
   }
 
   const startGame = () => {
@@ -49,9 +54,11 @@ const Game = () => {
     setMoles([])
     setGameOver(false)
     generateMoles()
-    setTimeout(() => {
-      activateMole()
-    }, Math.floor(Math.random() * 600 + 400))
+    setMoleTimeout(
+      setTimeout(() => {
+        activateMole()
+      }, Math.floor(Math.random() * 600 + 400))
+    )
   }
 
   const handleMoleClick = (index) => {
@@ -63,6 +70,16 @@ const Game = () => {
     })
     setScore(score + 1)
   }
+
+  const endGame = () => {
+    setGameOver(true)
+  }
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(moleTimeout)
+    }
+  }, [moleTimeout])
 
   const handleImageChange = (e) => {
     const file = e.target.files[0]
@@ -92,10 +109,6 @@ const Game = () => {
         <button onClick={startGame}>Start</button>
       </>
     )
-  }
-
-  const endGame = () => {
-    setGameOver(true)
   }
 
   return (
