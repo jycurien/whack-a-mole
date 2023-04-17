@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import Countdown from './Countdown'
 
 const Game = () => {
   const [gameOver, setGameOver] = useState(true)
@@ -40,6 +41,8 @@ const Game = () => {
   }
 
   const startGame = () => {
+    setScore(0)
+    setMoles([])
     setGameOver(false)
     generateMoles()
     setTimeout(() => {
@@ -66,9 +69,14 @@ const Game = () => {
     )
   }
 
+  const endGame = () => {
+    setGameOver(true)
+  }
+
   return (
     <>
       <h2>Score: {score}</h2>
+      <Countdown endGame={endGame} gameOver={gameOver} />
       <div
         className='mole-container'
         style={{
