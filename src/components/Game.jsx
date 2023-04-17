@@ -1,5 +1,5 @@
 const Game = () => {
-  return <main>TODO</main>
+  return <div>TODO</div>
 }
 
 export default Game
