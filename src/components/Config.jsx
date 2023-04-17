@@ -7,12 +7,7 @@ const Config = ({ handleImageChange, columns, setColumns, rows, setRows }) => {
           <small>(works better with a square image)</small>:
         </label>
         <br />
-        <input
-          id='image'
-          type='file'
-          onChange={handleImageChange}
-          placeholder=''
-        />
+        <input id='image' type='file' onChange={handleImageChange} />
       </div>
       <div>
         <label htmlFor='columns'>Number of columns:</label>
