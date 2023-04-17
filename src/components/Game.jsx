@@ -12,9 +12,37 @@ const Game = () => {
     setMoles(newMoles)
   }
 
+  const activateMole = () => {
+    const moleIndex = Math.floor(Math.random() * 9)
+    setMoles((prevMoles) => {
+      const updatedMoles = [...prevMoles]
+      updatedMoles[moleIndex].active = true
+      return updatedMoles
+    })
+
+    setTimeout(() => {
+      deactivateMole(moleIndex)
+    }, Math.floor(Math.random() * 600 + 400))
+  }
+
+  const deactivateMole = (index) => {
+    setMoles((prevMoles) => {
+      const updatedMoles = [...prevMoles]
+      updatedMoles[index].active = false
+      return updatedMoles
+    })
+
+    setTimeout(() => {
+      activateMole()
+    }, Math.floor(Math.random() * 600 + 400))
+  }
+
   const startGame = () => {
     setGameOver(false)
     generateMoles()
+    setTimeout(() => {
+      activateMole()
+    }, Math.floor(Math.random() * 600 + 400))
   }
 
   if (gameOver) {
